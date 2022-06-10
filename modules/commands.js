@@ -8,9 +8,11 @@ import { getOsPropValue } from './os.js';
 import { read } from './read.js';
 import { rename } from './rename.js';
 import { up } from './up.js';
+import { cd } from './cd.js';
 
 export const commands = {
   up: up,
+  cd: cd,
   cat: read,
   add: create,
   rn: rename,
