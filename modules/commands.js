@@ -7,8 +7,10 @@ import { calculateHash } from './hash.js';
 import { getOsPropValue } from './os.js';
 import { read } from './read.js';
 import { rename } from './rename.js';
+import { up } from './up.js';
 
 export const commands = {
+  up: up,
   cat: read,
   add: create,
   rn: rename,
