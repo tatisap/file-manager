@@ -1,28 +1,7 @@
 import { argv, stdin, stdout, cwd } from 'process';
 import readline from 'readline';
 import os from 'os';
-
-import { create } from './modules/create.js';
-import { remove } from './modules/delete.js';
-import { copy } from './modules/copy.js';
-import { compress } from './modules/compress.js';
-import { decompress } from './modules/decompress.js';
-import { calculateHash } from './modules/hash.js';
-import { getOsPropValue } from './modules/os.js';
-import { read } from './modules/read.js';
-import { rename } from './modules/rename.js';
-
-const commands = {
-  cat: read,
-  add: create,
-  rn: rename,
-  cp: copy,
-  rm: remove,
-  os: getOsPropValue,
-  hash: calculateHash,
-  compress: compress,
-  decompress: decompress,
-};
+import { validate } from './modules/input-validation.js';
 
 process.chdir(os.homedir());
 
@@ -41,6 +20,11 @@ const rl = readline.createInterface({
 
 rl.on('line', (userInput) => {
   if (userInput.trim() === '.exit') rl.close();
+
+  const inputValues = userInput.split(' ').filter(value => value !== '');
+  const command = inputValues[0];
+  const args = inputValues.slice(1);
+  validate(command, args);
 })
 
 rl.on('close', () => stdout.write(`Thank you for using File Manager, ${username}!\n`));
