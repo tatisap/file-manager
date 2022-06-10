@@ -13,7 +13,7 @@ export const getOsPropValue = (prop) => {
 }
 
 function getEOL() {
-  return os.EOL
+  return JSON.stringify(os.EOL);
 }
 
 function getCpusInfo() {
