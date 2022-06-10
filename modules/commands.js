@@ -9,10 +9,12 @@ import { read } from './read.js';
 import { rename } from './rename.js';
 import { up } from './up.js';
 import { cd } from './cd.js';
+import { ls } from './ls.js';
 
 export const commands = {
   up: up,
   cd: cd,
+  ls: ls,
   cat: read,
   add: create,
   rn: rename,
