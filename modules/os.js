@@ -9,6 +9,7 @@ const osParameters = {
 }
 
 export const getOsPropValue = (prop) => {
+  if (osParameters[prop] === undefined) throw new Error('Invalid input');
   console.log(osParameters[prop]);
 }
 
