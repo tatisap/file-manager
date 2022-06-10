@@ -1,4 +1,4 @@
-import { argv, stdin, stdout } from 'process';
+import { argv, stdin, stdout, cwd } from 'process';
 import readline from 'readline';
 import os from 'os';
 
@@ -24,7 +24,7 @@ const commands = {
   decompress: decompress,
 };
 
-let currentdir = os.homedir();
+process.chdir(os.homedir());
 
 const usernameArg = argv.find(arg => arg.startsWith('--username'));
 const username = (usernameArg !== undefined) ? 
@@ -32,15 +32,15 @@ const username = (usernameArg !== undefined) ?
   'Unknown';
 
 stdout.write(`Welcome to the File Manager, ${username}!\n`);
-stdout.write(`You are currently in ${currentdir}\n`);
+stdout.write(`You are currently in ${cwd()}\n`);
 
 const rl = readline.createInterface({
   input: stdin,
   output: stdout
 });
 
-rl.on('line', (text) => {
-  if (text.trim() === '.exit') rl.close();
+rl.on('line', (userInput) => {
+  if (userInput.trim() === '.exit') rl.close();
 })
 
 rl.on('close', () => stdout.write(`Thank you for using File Manager, ${username}!\n`));
