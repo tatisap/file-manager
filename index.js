@@ -2,7 +2,7 @@ import { argv, stdin, stdout } from 'process';
 import readline from 'readline';
 import os from 'os';
 
-let currentdir = os.homedir()
+let currentdir = os.homedir();
 
 const usernameArg = argv.find(arg => arg.startsWith('--username'));
 const username = (usernameArg !== undefined) ? 
@@ -17,5 +17,8 @@ const rl = readline.createInterface({
   output: stdout
 });
 
+rl.on('line', (text) => {
+  if (text.trim() === '.exit') rl.close();
+})
 
-
+rl.on('close', () => stdout.write(`Thank you for using File Manager, ${username}!\n`));
