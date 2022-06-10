@@ -9,7 +9,7 @@ const osParameters = {
 }
 
 export const getOsPropValue = (prop) => {
-  return osParameters[prop];
+  console.log(osParameters[prop]);
 }
 
 function getEOL() {
@@ -17,12 +17,11 @@ function getEOL() {
 }
 
 function getCpusInfo() {
-  return os.cpus().map(cpu => { 
-    return {
-      model: cpu.model,
-      speed: Math.round(cpu.speed / 1000),
-    }
-  })
+  const amount = `Amount of CPUS: ${os.cpus().length}\n`;
+  const info = os.cpus().reduce((acc, value, i) => {
+    return acc + `${i + 1} model: ${value.model}, speed: ${Math.round(value.speed / 1000)} GHz;\n`;
+  },'');
+  return `${amount}${info}`;
 }
 
 function getHomedir() {
