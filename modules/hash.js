@@ -1,11 +1,23 @@
-import { readFile } from 'fs/promises';
+import { createReadStream } from 'fs';
+import { makeAbsolute } from './absPath.js';
+import { isExist } from './rename.js';
 
-export const calculateHash = async (path) => {
-  const content = await readFile(path, { encoding: 'utf-8' });
-  
-  const { createHash } = await import('node:crypto');
+export const calculateHash = async (filePath) => {
+  const absFilePath = makeAbsolute(filePath);
+  if (!await isExist(absFilePath)) throw new Error('FS operation failed');
 
-  const hash = createHash('sha256');
-  hash.update(content);
-  console.log(hash.digest('hex'));
+  const stream = createReadStream(absFilePath, 'utf-8');
+
+  let content = '';
+  stream.on('data', (chunk) => content += chunk);
+  stream.on('end', async () => {
+    const { createHash } = await import('node:crypto');
+
+    const hash = createHash('sha256');
+    hash.update(content);
+    console.log(hash.digest('hex'));
+  });
+  stream.on('error', (err) => {
+    if (err.code === 'EISDIR') console.error('Invalid input');
+  });
 };
