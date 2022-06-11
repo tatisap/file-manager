@@ -2,7 +2,7 @@ import { rename as renameFile, access } from 'fs/promises';
 import path from 'path';
 import { makeAbsolute } from './absPath.js';
 
-async function isExist(filePath) {
+export async function isExist(filePath) {
   try {
     await access(filePath);
     return true;
