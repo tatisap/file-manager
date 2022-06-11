@@ -1,15 +1,20 @@
 import { createReadStream, createWriteStream } from 'fs';
+import path from 'path';
 import { pipeline } from 'stream';
-import { createGzip } from 'zlib';
+import { createBrotliCompress } from 'zlib';
+import { makeAbsolute } from './absPath.js';
+import { isExist } from './rename.js';
 
-export const compress = async (from, to) => {
-  const source = createReadStream(from);
-  const dest = createWriteStream(to);
-  const gzip = createGzip();
+export const compress = async (srcPath, destDirPath) => {
+  if (!await isExist(makeAbsolute(srcPath))) throw new Error('FS operation failed');
+
+  const source = createReadStream(makeAbsolute(srcPath));
+  const dest = createWriteStream(path.join(makeAbsolute(destDirPath), 'archive'));
+  const brotli = createBrotliCompress();
 
   pipeline(
     source,
-    gzip,
+    brotli,
     dest,
     (err) => {
       if (err) return console.error(err)
