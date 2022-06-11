@@ -1,8 +1,10 @@
 import { unlink } from 'fs/promises';
+import { makeAbsolute } from './absPath.js';
 
-export const remove = async (path) => {
+export const remove = async (filePath) => {
   try {
-    await unlink(path);
+    const absFilePath = makeAbsolute(filePath);
+    await unlink(absFilePath);
   }
   catch (err) {
     if (err.code === 'ENOENT') throw new Error('FS operation failed');
