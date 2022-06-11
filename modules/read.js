@@ -1,11 +1,17 @@
 import { createReadStream } from 'fs';
-import { stdout } from 'process';
+import path, { isAbsolute } from 'path';
+import { cwd, stdout } from 'process';
 
-export const read = async (path) => {
-  const stream = createReadStream(path, 'utf-8');
-
+export const read = async (filePath) => {
+  const stream = createReadStream((
+    isAbsolute(filePath)) ? filePath : path.join(cwd(), filePath),
+    'utf-8'
+  );
+  
   let content = '';
   stream.on('data', (chunk) => content += chunk);
   stream.on('end', () => stdout.write(`${content}\n`));
-  stream.on('error', (err) => console.error(err.message));
+  stream.on('error', (err) => {
+    if (err.code === 'EISDIR') console.error('Invalid input');
+  });
 };
