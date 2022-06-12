@@ -1,6 +1,5 @@
 import path, { isAbsolute } from 'path';
-import os from 'os';
-import { cwd, stdout } from 'process';
+import { cwd } from 'process';
 
 export const cd = (dirPath) => {
   try {
@@ -11,6 +10,6 @@ export const cd = (dirPath) => {
     }
   }
   catch (err) {
-    if (err.code === 'ENOENT') throw new Error('Invalid input');
+    if (err.code === 'ENOENT' || err.code === 'ENOTDIR') throw new Error('Invalid input');
   }
 }
