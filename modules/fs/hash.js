@@ -1,6 +1,6 @@
 import { createReadStream } from 'fs';
-import { makeAbsolute } from './absPath.js';
-import { isExist } from './rename.js';
+import { makeAbsolute } from '../common/make-path-absolute.js';
+import { isExist } from '../common/validation.js';
 
 export const calculateHash = async (filePath) => {
   const absFilePath = makeAbsolute(filePath);

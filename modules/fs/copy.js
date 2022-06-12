@@ -1,6 +1,6 @@
 import path from 'path';
-import { isExist } from './rename.js';
-import { makeAbsolute } from './absPath.js';
+import { isExist } from '../common/validation.js';
+import { makeAbsolute } from '../common/make-path-absolute.js';
 import { createReadStream, createWriteStream } from 'fs';
 import { pipeline } from 'stream/promises';
 

@@ -1,12 +1,12 @@
-import { argv, stdin, stdout, cwd } from 'process';
-import readline from 'readline';
 import os from 'os';
-import { validate } from './modules/validation.js';
-import { commands } from './modules/commands.js';
+import readline from 'readline';
+import { argv, stdin, stdout, cwd } from 'process';
+import { validateInput } from './modules/common/validation.js';
+import { commands } from './modules/common/commands.js';
 
 process.chdir(os.homedir());
 
-const usernameArg = argv.find(arg => arg.startsWith('--username'));
+const usernameArg = argv.find(arg => arg.startsWith('--username='));
 const username = (usernameArg !== undefined) ? 
   usernameArg.slice(usernameArg.indexOf('=') + 1) : 
   'Unknown';
@@ -25,7 +25,7 @@ rl.on('line', async (userInput) => {
   try {
     const inputValues = userInput.split(' ').filter(value => value !== '');
     const [command, ...args] = inputValues;
-    validate(command, args);
+    validateInput(command, args);
     await commands[command](...args);
   }
   catch (err) {

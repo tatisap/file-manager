@@ -1,9 +1,9 @@
 import { createReadStream, createWriteStream } from 'fs';
 import path from 'path';
 import { pipeline } from 'stream';
-import { createBrotliDecompress, createUnzip } from 'zlib';
-import { makeAbsolute } from './absPath.js';
-import { isExist } from './rename.js';
+import { createBrotliDecompress } from 'zlib';
+import { makeAbsolute } from '../common/make-path-absolute.js';
+import { isExist } from '../common/validation.js';
 
 export const decompress = async (srcPath, destDirPath) => {
   const absSrcPath = makeAbsolute(srcPath);

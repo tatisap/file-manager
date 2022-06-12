@@ -2,8 +2,8 @@ import { createReadStream, createWriteStream } from 'fs';
 import path from 'path';
 import { pipeline } from 'stream';
 import { createBrotliCompress } from 'zlib';
-import { makeAbsolute } from './absPath.js';
-import { isExist } from './rename.js';
+import { makeAbsolute } from '../common/make-path-absolute.js';
+import { isExist } from '../common/validation.js';
 
 export const compress = async (srcPath, destDirPath) => {
   if (!await isExist(makeAbsolute(srcPath))) throw new Error('FS operation failed');

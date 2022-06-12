@@ -1,5 +1,5 @@
 import { unlink } from 'fs/promises';
-import { makeAbsolute } from './absPath.js';
+import { makeAbsolute } from '../common/make-path-absolute.js';
 
 export const remove = async (filePath) => {
   try {

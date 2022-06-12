@@ -1,16 +1,6 @@
-import { rename as renameFile, access } from 'fs/promises';
+import { rename as renameFile } from 'fs/promises';
 import path from 'path';
-import { makeAbsolute } from './absPath.js';
-
-export async function isExist(filePath) {
-  try {
-    await access(filePath);
-    return true;
-  } 
-  catch (err) {
-    if (err.code === 'ENOENT') return false;
-  }
-}
+import { makeAbsolute } from '../common/make-path-absolute.js';
 
 export const rename = async (filePath, newName) => {
   const absFilePath = makeAbsolute(filePath);
