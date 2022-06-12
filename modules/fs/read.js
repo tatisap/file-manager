@@ -1,18 +1,19 @@
 import { createReadStream } from 'fs';
-import path, { isAbsolute } from 'path';
-import { cwd, stdout } from 'process';
+import { stdout } from 'process';
 import os from 'os';
+import { makeAbsolute } from '../common/make-path-absolute.js';
 
 export const read = async (filePath) => {
-  const stream = createReadStream((
-    isAbsolute(filePath)) ? filePath : path.join(cwd(), filePath),
-    'utf-8'
-  );
+  const stream = createReadStream(makeAbsolute(filePath), 'utf-8');
   
-  let content = '';
-  stream.on('data', (chunk) => content += chunk);
-  stream.on('end', () => stdout.write(`${content}${os.EOL}`));
-  stream.on('error', (err) => {
-    if (err.code === 'EISDIR') console.error('Invalid input');
-  });
+  return new Promise((resolve, reject) => {
+    let content = '';
+    stream.on('data', (chunk) => content += chunk);
+    stream.on('end', () => resolve(content));
+    stream.on('error', (err) => reject(err));
+  })
+    .then((content) => stdout.write(`${content}${os.EOL}`))
+    .catch((err) => {
+      if (err.code === 'EISDIR') console.error('Invalid input');
+    });
 };
