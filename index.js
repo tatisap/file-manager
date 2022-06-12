@@ -20,16 +20,18 @@ const rl = readline.createInterface({
 });
 
 rl.on('line', async (userInput) => {
-  if (userInput.trim() === '.exit') rl.close();
-  stdout.write(`${os.EOL}`);
+  if (userInput.trim() === '.exit') {
+    rl.close(); 
+    return;
+  }
   try {
     const inputValues = userInput.split(' ').filter(value => value !== '');
     const [command, ...args] = inputValues;
     validateInput(command, args);
     await commands[command](...args);
+    stdout.write(`${os.EOL}You are currently in ${cwd()}${os.EOL}`);
   }
   catch (err) {
-    console.log(err.code);
     console.log(err.message);
   }
 });

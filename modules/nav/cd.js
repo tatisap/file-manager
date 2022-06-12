@@ -9,7 +9,6 @@ export const cd = (dirPath) => {
     } else {
       process.chdir(path.join(cwd(), dirPath));
     }
-    stdout.write(`You are currently in ${cwd()}${os.EOL}`);
   }
   catch (err) {
     if (err.code === 'ENOENT') throw new Error('Invalid input');
