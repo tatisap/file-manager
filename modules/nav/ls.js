@@ -4,7 +4,7 @@ import { readdir } from 'fs/promises';
 export const ls = async () => {
   try {
     const files = await readdir(cwd(), { withFileTypes: true });
-    console.log(files.length);
+  
     if (files.length === 0) {
       console.log('Directory is empty');
     } else {
@@ -14,6 +14,7 @@ export const ls = async () => {
     }
   }
   catch (err) {
-    if (err.code === 'ENOENT' || err.code === 'EPERM') throw new Error('FS operation failed');
+    if (err.code === 'EPERM') throw new Error('Operation failed: operation is not permitted');
+    throw new Error('Operation failed');
   } 
 };

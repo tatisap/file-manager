@@ -10,6 +10,7 @@ export const cd = (dirPath) => {
     }
   }
   catch (err) {
-    if (err.code === 'ENOENT' || err.code === 'ENOTDIR') throw new Error('Invalid input');
+    if (err.code === 'ENOENT' || err.code === 'ENOTDIR') throw new Error('Operation failed: no such directory');
+    throw new Error('Operation failed');
   }
 }
