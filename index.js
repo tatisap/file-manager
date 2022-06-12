@@ -1,7 +1,8 @@
 import { argv, stdin, stdout, cwd } from 'process';
 import readline from 'readline';
 import os from 'os';
-import { validate } from './modules/input-validation.js';
+import { validate } from './modules/validation.js';
+import { commands } from './modules/commands.js';
 
 process.chdir(os.homedir());
 
@@ -18,13 +19,19 @@ const rl = readline.createInterface({
   output: stdout
 });
 
-rl.on('line', (userInput) => {
+rl.on('line', async (userInput) => {
   if (userInput.trim() === '.exit') rl.close();
-
-  const inputValues = userInput.split(' ').filter(value => value !== '');
-  const command = inputValues[0];
-  const args = inputValues.slice(1);
-  validate(command, args);
-})
+  stdout.write('\n');
+  try {
+    const inputValues = userInput.split(' ').filter(value => value !== '');
+    const [command, ...args] = inputValues;
+    validate(command, args);
+    await commands[command](...args);
+  }
+  catch (err) {
+    console.log(err.code);
+    console.log(err.message);
+  }
+});
 
 rl.on('close', () => stdout.write(`Thank you for using File Manager, ${username}!\n`));
