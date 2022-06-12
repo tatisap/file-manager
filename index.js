@@ -3,6 +3,7 @@ import readline from 'readline';
 import { argv, stdin, stdout, cwd } from 'process';
 import { validateInput } from './modules/common/validation.js';
 import { commands } from './modules/common/commands.js';
+import { format } from './modules/common/format-args.js';
 
 process.chdir(os.homedir());
 
@@ -26,12 +27,14 @@ rl.on('line', async (userInput) => {
   }
   try {
     const inputValues = userInput.split(' ').filter(value => value !== '');
-    const [command, ...args] = inputValues;
+    const [command, ...rawArgs] = inputValues;
+    const args = format(rawArgs);
     validateInput(command, args);
     await commands[command](...args);
     stdout.write(`${os.EOL}You are currently in ${cwd()}${os.EOL}`);
   }
   catch (err) {
+    console.log(err);
     console.log(err.message);
   }
 });
