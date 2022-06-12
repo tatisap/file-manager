@@ -8,16 +8,19 @@ export const calculateHash = async (filePath) => {
 
   const stream = createReadStream(absFilePath, 'utf-8');
 
-  let content = '';
-  stream.on('data', (chunk) => content += chunk);
-  stream.on('end', async () => {
-    const { createHash } = await import('node:crypto');
-
-    const hash = createHash('sha256');
-    hash.update(content);
-    console.log(hash.digest('hex'));
-  });
-  stream.on('error', (err) => {
-    if (err.code === 'EISDIR') console.error('Invalid input');
-  });
+  return new Promise((resolve, reject) => {
+    let content = '';
+    stream.on('data', (chunk) => content += chunk);
+    stream.on('end', () => resolve(content));
+    stream.on('error', (err) => reject(err));
+  })
+    .then(async (content) => {
+      const { createHash } = await import('node:crypto');
+      const hash = createHash('sha256');
+      hash.update(content);
+      console.log(hash.digest('hex'));
+    })
+    .catch((err) => {
+      if (err.code === 'EISDIR') console.error('Invalid input');
+    });
 };
