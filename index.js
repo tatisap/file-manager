@@ -11,8 +11,8 @@ const username = (usernameArg !== undefined) ?
   usernameArg.slice(usernameArg.indexOf('=') + 1) : 
   'Unknown';
 
-stdout.write(`Welcome to the File Manager, ${username}!\n`);
-stdout.write(`You are currently in ${cwd()}\n`);
+stdout.write(`Welcome to the File Manager, ${username}!${os.EOL}`);
+stdout.write(`You are currently in ${cwd()}${os.EOL}`);
 
 const rl = readline.createInterface({
   input: stdin,
@@ -21,7 +21,7 @@ const rl = readline.createInterface({
 
 rl.on('line', async (userInput) => {
   if (userInput.trim() === '.exit') rl.close();
-  stdout.write('\n');
+  stdout.write(`${os.EOL}`);
   try {
     const inputValues = userInput.split(' ').filter(value => value !== '');
     const [command, ...args] = inputValues;
@@ -34,4 +34,4 @@ rl.on('line', async (userInput) => {
   }
 });
 
-rl.on('close', () => stdout.write(`Thank you for using File Manager, ${username}!\n`));
+rl.on('close', () => stdout.write(`Thank you for using File Manager, ${username}!${os.EOL}`));

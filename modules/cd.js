@@ -1,4 +1,5 @@
 import path, { isAbsolute } from 'path';
+import os from 'os';
 import { cwd, stdout } from 'process';
 
 export const cd = (dirPath) => {
@@ -8,7 +9,7 @@ export const cd = (dirPath) => {
     } else {
       process.chdir(path.join(cwd(), dirPath));
     }
-    stdout.write(`You are currently in ${cwd()}\n`);
+    stdout.write(`You are currently in ${cwd()}${os.EOL}`);
   }
   catch (err) {
     if (err.code === 'ENOENT') throw new Error('Invalid input');
