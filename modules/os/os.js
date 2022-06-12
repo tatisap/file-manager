@@ -20,7 +20,7 @@ function getEOL() {
 function getCpusInfo() {
   const amount = `Amount of CPUS: ${os.cpus().length}${os.EOL}`;
   const info = os.cpus().reduce((acc, value, i) => {
-    return acc + `${i + 1} model: ${value.model}, speed: ${Math.round(value.speed / 1000)} GHz;${os.EOL}`;
+    return acc + `${i + 1} model: ${value.model}, speed: ${(value.speed / 1000).toFixed(2)} GHz;${os.EOL}`;
   },'');
   return `${amount}${info}`;
 }
