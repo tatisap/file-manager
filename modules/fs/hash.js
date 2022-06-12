@@ -4,7 +4,7 @@ import { isExist } from '../common/validation.js';
 
 export const calculateHash = async (filePath) => {
   const absFilePath = makeAbsolute(filePath);
-  if (!await isExist(absFilePath)) throw new Error('FS operation failed');
+  if (!await isExist(absFilePath)) throw new Error('Operation failed: no such file exists');
 
   const stream = createReadStream(absFilePath, 'utf-8');
 
@@ -21,6 +21,6 @@ export const calculateHash = async (filePath) => {
       console.log(hash.digest('hex'));
     })
     .catch((err) => {
-      if (err.code === 'EISDIR') console.error('Invalid input');
+      if (err.code === 'EISDIR') throw new Error('Operation failed: no such file exists');
     });
 };

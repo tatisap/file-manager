@@ -7,6 +7,7 @@ export const create = async (fileName) => {
     await writeFile(path.join(cwd(), fileName), '', {flag:'wx'});
   }
   catch (err) {
-    if (err.code === 'EEXIST') throw new Error('FS operation failed');
+    if (err.code === 'EEXIST') throw new Error('Operation failed: this name is already in use');
+    throw new Error('Operation failed');
   }
 };

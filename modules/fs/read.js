@@ -14,6 +14,7 @@ export const read = async (filePath) => {
   })
     .then((content) => stdout.write(`${content}${os.EOL}`))
     .catch((err) => {
-      if (err.code === 'EISDIR') console.error('Invalid input');
+      if (err.code === 'EISDIR') throw new Error('Operation failed: it is not possible to read directory');
+      throw new Error('Operation failed');
     });
 };

@@ -34,7 +34,8 @@ rl.on('line', async (userInput) => {
     stdout.write(`${os.EOL}You are currently in ${cwd()}${os.EOL}`);
   }
   catch (err) {
-    console.log(err);
+    stdout.write(`${os.EOL}`);
+    // console.log(err);
     console.log(err.message);
   }
 });

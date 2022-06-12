@@ -7,6 +7,7 @@ export const remove = async (filePath) => {
     await unlink(absFilePath);
   }
   catch (err) {
-    if (err.code === 'ENOENT') throw new Error('FS operation failed');
+    if (err.code === 'ENOENT') throw new Error('Operation failed: no such file exists');
+    throw new Error('Operation failed');
   }
 };
