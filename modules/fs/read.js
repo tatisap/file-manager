@@ -15,6 +15,7 @@ export const read = async (filePath) => {
     .then((content) => stdout.write(`${content}${os.EOL}`))
     .catch((err) => {
       if (err.code === 'EISDIR') throw new Error('Operation failed: it is not possible to read directory');
+      if (err.code === 'ENOENT') throw new Error('Operation failed: no such file exists');
       throw new Error('Operation failed');
     });
 };
