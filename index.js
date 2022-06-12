@@ -13,6 +13,7 @@ const username = (usernameArg !== undefined) ?
   'Unknown';
 
 stdout.write(`Welcome to the File Manager, ${username}!${os.EOL}`);
+stdout.write(`For help check Readme.md${os.EOL}`);
 stdout.write(`You are currently in ${cwd()}${os.EOL}`);
 
 const rl = readline.createInterface({
