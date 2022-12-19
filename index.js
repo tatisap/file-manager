@@ -41,4 +41,4 @@ rl.on('line', async (userInput) => {
   }
 });
 
-rl.on('close', () => stdout.write(`Thank you for using File Manager, ${username}!${os.EOL}`));
+rl.on('close', () => stdout.write(`Thank you for using File Manager, ${username}, goodbye!${os.EOL}`));
