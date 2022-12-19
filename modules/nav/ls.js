@@ -8,9 +8,11 @@ export const ls = async () => {
     if (files.length === 0) {
       console.log('Directory is empty');
     } else {
-      for await (const file of files) {
-        console.log(file.name);
-      }
+      console.table(files.map((file) => {
+        return {
+          Name: file.name,
+          Type: file.isDirectory() ? 'directory' : 'file'}
+      }));
     }
   }
   catch (err) {
