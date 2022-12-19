@@ -13,9 +13,9 @@ import { compress } from '../fs/compress.js';
 import { decompress } from '../fs/decompress.js';
 
 export const commands = {
-  up: up,
-  cd: cd,
-  ls: ls,
+  up,
+  cd,
+  ls,
   cat: read,
   add: create,
   rn: rename,
@@ -24,6 +24,6 @@ export const commands = {
   rm: remove,
   os: getOsPropValue,
   hash: calculateHash,
-  compress: compress,
-  decompress: decompress,
+  compress,
+  decompress,
 };
